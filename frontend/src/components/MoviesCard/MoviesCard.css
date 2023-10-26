@@ -1,0 +1,90 @@
+.card {
+	padding: 18px 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	row-gap: 18px;
+	font-weight: 400;
+	border-radius: 6px;
+	background: #222;
+	box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
+	max-width: 360px;
+}
+
+.card__info {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 18px;
+}
+
+.card__title {
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.2; /* 120% */
+	color: #FFF;
+	margin: 0;
+}
+
+.card__time {
+	color: #8B8B8B;
+	font-size: 13px;
+	line-height: 1.38; /* 138.462% */
+	margin: 0;
+}
+
+.card__img {
+	max-width: 360px;
+}
+
+.card__save-button {
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 0.91; /* 91.667% */
+	width: 100px;
+	height: 29px;
+	border: none;
+	border-radius: 30px;
+	background: #313131;
+	
+	color: #FFF;
+	align-self:center;
+}
+
+.card__save-button_checked {
+	background: #EE3465 url(../../images/check.svg) no-repeat center center;
+}
+
+.card__save-button_type_save {
+	background: #313131 url(../../images/cross.svg) no-repeat center center;
+}
+
+.card__save-button:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 1023px) {
+	.card {
+		max-width: 342px;
+	}
+}
+@media screen and (max-width: 767px) {
+	.card {
+		max-width: 300px;
+		row-gap: 14px;
+	}
+
+	.card__info {
+		padding: 0 14px;
+	}
+
+	.card__title {
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+	.card__time {
+		font-size: 10px;
+		line-height: 1.8;
+	}
+}
