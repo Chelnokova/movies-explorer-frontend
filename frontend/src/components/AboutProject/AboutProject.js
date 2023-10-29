@@ -1,8 +1,9 @@
+import React from "react";
 import "./AboutProject.css";
 
 function AboutProject() {
   return (
-    <section className="about-project" id={"aboutProject"}>
+    <section className="about-project" id="about">
       <h2 className="about-project__title">О проекте</h2>
       <div className="about-project__container">
         <div className="about-project__info">

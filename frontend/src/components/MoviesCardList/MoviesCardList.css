@@ -1,21 +1,23 @@
 .card-list {
 	padding: 80px 0 0;
 	display: flex;
+	/* flex: 1 1 auto; */
 	flex-direction: column;
 }
 
 .card-list__items {
 	margin: 0;
 	padding: 0;
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 355px);
+	justify-content: center;
 	column-gap: 28px;
 	row-gap: 32px;
-	flex-wrap: wrap;
-	justify-content: center;
 }
 
 @media screen and (max-width: 1023px) {
 	.card-list__items {
+		grid-template-columns: repeat(2, 339px);
 		column-gap: 24px;
 		row-gap: 35px;
 	}
@@ -23,9 +25,13 @@
 @media screen and (max-width: 767px) {
 	.card-list {
 		padding: 50px 0 0;
+		
 	}
 
 	.card-list__items {
 		gap: 16px;
+		justify-content: center;
+		justify-items: center;
+		grid-template-columns: 300px;
 	}
 }

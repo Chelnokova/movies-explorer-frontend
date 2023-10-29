@@ -8,7 +8,7 @@ function Form({ title, button, text, link, linktext, children }) {
       <Link to="/" className="logo logo_start">
         <img src={logo} alt="Логотип сайта" />
       </Link>
-      <h2 className="form__title">{title}</h2>
+      <h1 className="form__title">{title}</h1>
       <div className="form__container">{children}</div>
       <button type="submit" className="form__button">
         {button}

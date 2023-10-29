@@ -7,16 +7,16 @@ function MoviesCardList() {
       <ul className="card-list__items">
         <MoviesCard />
         <MoviesCard />
+        {/* <MoviesCard />
+        <MoviesCard />
+        <MoviesCard /> */}
+        {/* <MoviesCard />
+        <MoviesCard /> */}
+        {/* <MoviesCard />
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+        <MoviesCard /> */}
       </ul>
     </section>
   );

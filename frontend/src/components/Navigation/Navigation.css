@@ -1,19 +1,35 @@
 .navigation {
-	display: flex;
-	column-gap: 50px;
+	position: relative;
 }
 
-.navigation__icon {
-	cursor: pointer;
-	display: none;
+.navigation__login {
+	column-gap: 14px;
 }
 
-.navigation__icon:hover {
+.navigation__registration {
+	text-decoration: none;
+	color: #FFF;
+}
+
+.navigation__registration:hover {
 	opacity: 0.7;
 }
 
-.navigation__overlay {
-	display: none;
+.navigation__button-login {
+	padding: 8px 20px;
+	border-radius: 3px;
+	background: #3DDC84;
+	color: #000;
+	text-decoration: none;
+}
+
+.navigation__button-login:hover {
+	opacity: 0.8;
+}
+
+.navigation__menu {
+	display: flex;
+	column-gap: 50px;
 }
 
 .navigation__main {
@@ -34,7 +50,6 @@
 }
 
 .navigation__link:hover {
-	font-weight: 500;
 	opacity: 0.7;
 }
 
@@ -61,7 +76,7 @@
 	width: 30px;
 	height: 30px;
 	border-radius: 6px;
-	background: #0F4157;
+	background: #313131;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -81,96 +96,12 @@
 	line-height: 1.333; /* 133.333% */
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 767px) {
 	.navigation {
 		column-gap: 0;
-		position: relative;
 	}
 
-	.navigation__icon {
-		display: block;
+	.navigation__menu {
+		display: none;
 	}
-
-	.navigation__overlay {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-around;
-		width: 520px;
-		height: 100%;
-		background: #202020;
-		position: fixed;
-		right: 0;
-		top: 0;
-		z-index: 2;
-	}
-
-	.navigation__main {
-		display: flex;
-		row-gap: 28px;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.navigation__link {
-		font-size: 18px;
-		line-height: normal;
-	}
-
-	.navigation__button-close {
-		border: none;
-		width: 22px;
-		height: 22px;
-		position: absolute;
-		top: 29px;
-		right: 29px;
-		background: url(../../images/cross.svg) center / 100% no-repeat #202020;
-		cursor: pointer;
-	}
-
-	.navigation__button-close:hover {
-		opacity: 0.7;
-	}
-
-	.navigation__img-container {
-		background: #313131;
-	}
-
-	.navigation__link:hover {
-		font-weight: 500;
-		opacity: 0.7;
-		border-bottom: 2px solid #fff;
-	}
-}
-
-
-
-@media screen and (max-width: 767px) {
-	.navigation__overlay {
-		width: 100%;
-	}
-	.navigation__login {
-		column-gap: 14px;
-	}
-}
-
-.navigation__registration {
-	text-decoration: none;
-	color: #FFF;
-}
-
-.navigation__registration:hover {
-	opacity: 0.7;
-}
-
-.navigation__button-login {
-	padding: 8px 20px;
-	border-radius: 3px;
-	background: #3DDC84;
-	color: #000;
-	text-decoration: none;
-}
-
-.navigation__button-login:hover {
-	opacity: 0.8;
 }

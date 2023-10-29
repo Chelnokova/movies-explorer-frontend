@@ -1,5 +1,5 @@
 .about-me {
-	padding: 110px 70px 85px;
+	padding: 110px 70px 100px;
 	display: flex;
 	flex-direction: column;
 	row-gap: 66px;
@@ -58,6 +58,7 @@
 
 .about-me__photo {
 	max-height: 327px;
+	max-width: 270px;
 	object-fit: contain;
 	border-radius: 10px;
 }
@@ -84,7 +85,11 @@
 		font-size: 12px;
 		line-height: 1.5;
 		max-width: 364px;
-		margin: 0 0 87px;
+		margin: 0 0 105px;
+	}
+
+	.about-me__photo {
+		max-width: 255px;
 	}
 }
 @media screen and (max-width: 767px) {
@@ -101,7 +106,8 @@
 
 	.about-me__student {
 		flex-direction: column-reverse;
-		row-gap: 40px;
+		align-items: center;
+		row-gap: 65px;
 	}
 
 	.about-me__container {
@@ -125,10 +131,10 @@
 		font-size: 11px;
 		line-height: 1.45;
 		max-width: 292px;
-		margin: 0 0 40px;
+		margin: 0 0 72px;
 	}
 
 	.about-me__photo {
-		height: 352px;
+		max-width: 292px;
 	}
 }

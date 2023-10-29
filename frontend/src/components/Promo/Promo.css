@@ -31,6 +31,7 @@
 	font-weight: 400;
 	line-height: normal;
 	opacity: 0.5;
+	z-index: 0;
 }
 
 .promo__img {
@@ -40,14 +41,14 @@
 
 @media screen and (max-width: 1023px) {
 	.promo {
-		padding: 140px 50px 76px;
+		padding: 140px 50px 85px;
 		flex-direction: column-reverse;
 		row-gap: 48px;
 		align-items: center;
 	}
 
 	.promo__info {
-		row-gap: 92px;
+		row-gap: 103px;
 		align-items: center;
 	}
 
@@ -62,15 +63,19 @@
 		font-size: 40px;
 		line-height: 1.25;
 	}
+
+	.promo__subtitle {
+		max-width: 260px;
+	}
 }
 @media screen and (max-width: 767px) {
 	.promo {
-		padding: 70px 14px 30px;
+		padding: 70px 14px 40px;
 		row-gap: 44px;
 	}
 
 	.promo__info {
-		row-gap: 80px;
+		row-gap: 90px;
 	}
 
 	.promo__text {
@@ -78,6 +83,7 @@
 	}
 
 	.promo__title {
+		max-width: 400px;
 		font-size: 30px;
 		line-height: 1.27;
 		letter-spacing: -1.2px;

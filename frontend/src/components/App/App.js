@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -8,22 +9,35 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
+
 import "./App.css";
 const headerColor = {
   background: "#202020",
 };
+const burgerColor = {
+  background: "#073042",
+};
+const colorIconProfile = {
+  background: "#0F4157",
+};
 
 function App() {
+  const [isloggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="body">
-      <div className="page page__container">
+      <div className="page">
         <Routes>
           <Route path="*" element={<NotFound />} />
           <Route
             path="/"
             element={
               <>
-                <Header />
+                <Header
+                  burgerColor={burgerColor}
+                  colorIconProfile={colorIconProfile}
+                  isloggedIn={isloggedIn}
+                />
                 <Main />
                 <Footer />
               </>

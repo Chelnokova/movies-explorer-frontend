@@ -30,6 +30,9 @@
 .footer__links {
 	display: flex;
 	column-gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .footer__item {

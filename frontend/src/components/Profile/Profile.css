@@ -25,10 +25,21 @@
 .profile__section {
 	display: flex;
 	justify-content: space-between;
+	position: relative;
+}
+
+.profile__section:first-child::before {
+	content: "";
+	position: absolute;
+	top: 30px;
+	left: 0;
+	width: 410px;
+	height: 1px;
+	background: #424242;
 }
 
 .profile__section:first-child {
-	margin-bottom: 16px;
+	margin-bottom: 32px;
 }
 
 .profile__label {
@@ -45,13 +56,6 @@
 	color: #EE3465;
 }
 
-.profile__line {
-	height: 1px;
-	width: 100%;
-	background: #424242;
-	margin-bottom: 17px;
-}
-
 .profile__button {
 	font-family: inherit;
 	border: none;
@@ -64,7 +68,7 @@
 }
 
 .profile__button:not(:last-child) {
-	margin-bottom: 16px;
+	margin-bottom: 14px;
 }
 
 .profile__button:hover {
@@ -72,17 +76,23 @@
 }
 
 .profile__button_save {
-	margin-top: 220px;
+	margin-top: 218px;
 }
 
 .profile__button_quit {
 	color: #EE3465;
+	text-decoration: none;
+	text-align: center;
 }
 
 @media screen and (max-width: 1023px) {
 	.profile {
 		padding: 236px 0 269px ;
 		row-gap: 96px;
+	}
+
+	.profile__button_save {
+		margin-top: 209px;
 	}
 }
 @media screen and (max-width: 767px) {
@@ -92,7 +102,7 @@
 	}
 
 	.profile__button_save {
-		margin-top: 210px;
+		margin-top: 380px;
 	}
 
 	.profile__form {
@@ -101,5 +111,9 @@
 
 	.profile__button {
 		font-size: 12px;
+	}
+
+	.profile__section:first-child::before {
+		width: 260px;
 	}
 }
