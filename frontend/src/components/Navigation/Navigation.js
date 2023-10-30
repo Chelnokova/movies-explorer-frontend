@@ -7,11 +7,11 @@ function Navigation({
   colorIconProfile,
   toggleNavigation,
   isClicked,
-  isloggedIn,
+  isLoggedIn,
 }) {
   return (
     <>
-      {!isloggedIn ? (
+      {!isLoggedIn ? (
         <nav className="navigation">
           <div className="navigation__login">
             <Link to="/signup" className="navigation__registration">

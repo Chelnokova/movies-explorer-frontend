@@ -22,7 +22,7 @@ const colorIconProfile = {
 };
 
 function App() {
-  const [isloggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className="body">
@@ -36,7 +36,7 @@ function App() {
                 <Header
                   burgerColor={burgerColor}
                   colorIconProfile={colorIconProfile}
-                  isloggedIn={isloggedIn}
+                  isLoggedIn={isLoggedIn}
                 />
                 <Main />
                 <Footer />

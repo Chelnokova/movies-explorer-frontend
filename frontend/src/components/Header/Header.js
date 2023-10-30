@@ -21,7 +21,7 @@ function Header(props) {
         <button
           type="button"
           className={`header__menu-button ${
-            !props.isloggedIn ? "header__menu-button_disactive" : ""
+            !props.isLoggedIn ? "header__menu-button_disactive" : ""
           }`}
           onClick={toggleNavigation}
           style={props.burgerColor}
@@ -32,7 +32,7 @@ function Header(props) {
           isClicked={isClicked}
           toggleNavigation={toggleNavigation}
           colorIconProfile={props.colorIconProfile}
-          isloggedIn={props.isloggedIn}
+          isLoggedIn={props.isLoggedIn}
         />
       </div>
     </header>
