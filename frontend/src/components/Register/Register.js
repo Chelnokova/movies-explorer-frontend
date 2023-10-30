@@ -45,8 +45,8 @@ function Register(props) {
         <input
           type="text"
           id="name"
-          minlength="2"
-          maxlength="30"
+          minLength="2"
+          maxLength="30"
           required
           placeholder="Ваше Имя"
           className="form__input"

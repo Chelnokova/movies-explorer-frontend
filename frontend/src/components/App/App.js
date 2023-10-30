@@ -30,24 +30,22 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
-      mainApi
-        .getUserInfo()
-        .then((userInfo) => {
-          setCurrentUser(userInfo);
-          console.log(userInfo);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    mainApi
+      .getUserInfo()
+      .then((userInfo) => {
+        setCurrentUser(userInfo);
+        console.log(userInfo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [isLoggedIn]);
 
   function handleRegister(name, email, password) {
     auth
       .register(name, email, password)
       .then((res) => {
-        navigate("/signin", { replace: true });
+        navigate("/signup", { replace: true });
       })
       .catch((err) => {
         console.log(err);
