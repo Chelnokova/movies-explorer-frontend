@@ -59,7 +59,7 @@
 .about-me__photo {
 	max-height: 327px;
 	max-width: 270px;
-	object-fit: contain;
+	object-fit: cover;
 	border-radius: 10px;
 }
 

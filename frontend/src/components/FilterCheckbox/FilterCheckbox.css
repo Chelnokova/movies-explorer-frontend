@@ -5,6 +5,10 @@
 	cursor: pointer;
 }
 
+.checkbox:hover {
+	opacity: 0.7;
+}
+
 .checkbox__switch {
 	-webkit-appearance: none;
 	-moz-appearance: none;

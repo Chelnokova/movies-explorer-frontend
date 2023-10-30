@@ -22,7 +22,7 @@ const colorIconProfile = {
 };
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div className="body">
@@ -49,7 +49,7 @@ function App() {
             path="/movies"
             element={
               <>
-                <Header style={headerColor} />
+                <Header style={headerColor} isLoggedIn={isLoggedIn} />
                 <Movies />
                 <Footer />
               </>
@@ -59,7 +59,7 @@ function App() {
             path="/saved-movies"
             element={
               <>
-                <Header style={headerColor} />
+                <Header style={headerColor} isLoggedIn={isLoggedIn} />
                 <SavedMovies />
                 <Footer />
               </>
@@ -69,7 +69,7 @@ function App() {
             path="/profile"
             element={
               <>
-                <Header style={headerColor} />
+                <Header style={headerColor} isLoggedIn={isLoggedIn} />
                 <Profile />
               </>
             }

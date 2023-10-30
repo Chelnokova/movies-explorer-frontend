@@ -8,7 +8,7 @@ function MoviesCard(props) {
         <h2 className="card__title">В погоне за Бенкси</h2>
         <p className="card__time">0ч 42м</p>
       </article>
-      <img className="card__img" src={img} alt={props.title} />
+      <img className="card__img" src={img} alt={`На изображении ${props.title}`} />
       <button type="button" className="card__save-button">
         Сохранить
       </button>

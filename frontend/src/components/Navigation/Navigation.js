@@ -37,7 +37,7 @@ function Navigation({
                 </Link>
               </li>
             </ul>
-            <Link to="" className="navigation__profile">
+            <Link to="/profile" className="navigation__profile">
               <p className="navigation__profile-text">Аккаунт</p>
               <div
                 className="navigation__img-container"
