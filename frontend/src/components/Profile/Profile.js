@@ -13,8 +13,8 @@ function Profile() {
           <input
             id="name"
             type="text"
-            minlength="2"
-            maxlength="30"
+            minLength="2"
+            maxLength="30"
             placeholder="Ваше имя"
             className="profile__input"
           />
