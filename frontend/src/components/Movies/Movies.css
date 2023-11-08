@@ -1,40 +1,20 @@
 .movies {
 	padding: 70px 70px 80px;
+	flex: 1 0 auto;
 }
 
-.movies__button {
-	border-radius: 6px;
-	background: #2F2F2F;
-	border: none;
-	color: #FFF;
-	font-size: 12px;
-	font-weight: 500;
-	line-height: normal;
-	width: 100%;
-	height: 36px;
-	margin: 70px 0 0;
-}
-
-.movies__button:hover {
-	opacity: 0.8;
-	cursor: pointer;
+.movies__text {
+	text-align: center;
+	font-size: 14px;
 }
 
 @media screen and (max-width: 1023px) {
 	.movies {
 		padding: 70px 30px 80px;
 	}
-
-	.movies__button {
-		margin: 87px 0 0;
-	}
 }
 @media screen and (max-width: 767px) {
 	.movies {
 		padding: 70px 14px 80px;
-	}
-
-	.movies__button {
-		margin: 110px 0 0;
 	}
 }

@@ -1,31 +1,20 @@
+import React from "react";
 import "./Register.css";
 import Form from "../Form/Form";
-import { useState } from "react";
+import { patterns } from "../../utils/constants";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 
 function Register(props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
-  }
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.handleRegister(name, email, password);
-
-    setName("");
-    setEmail("");
-    setPassword("");
+    props.handleRegister({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
   };
 
   return (
@@ -37,48 +26,56 @@ function Register(props) {
         link="/signin"
         linktext="Войти"
         onSubmit={handleSubmit}
+        isValid={isValid}
       >
         <label for="name" className="form__label">
-          {" "}
           Имя
+          <input
+            type="text"
+            id="nameReq"
+            name="name"
+            minLength="2"
+            maxLength="30"
+            required
+            placeholder="Ваше Имя"
+            className="form__input"
+            onChange={handleChange}
+            value={values.name}
+            pattern={patterns.name}
+          />
+          <span className="form__error-message">{errors.name}</span>
         </label>
-        <input
-          type="text"
-          id="name"
-          minLength="2"
-          maxLength="30"
-          required
-          placeholder="Ваше Имя"
-          className="form__input"
-          value={name}
-          onChange={handleChangeName}
-        />
         <label for="email" className="form__label">
           E-mail
+          <input
+            type="email"
+            id="emailReq"
+            name="email"
+            required
+            placeholder="Ваш Email"
+            className="form__input"
+            value={values.email}
+            onChange={handleChange}
+            pattern={patterns.email}
+          />
+          <span className="form__error-message">{errors.email}</span>
         </label>
-        <input
-          type="email"
-          id="email"
-          required
-          placeholder="Ваш Email"
-          className="form__input"
-          value={email}
-          onChange={handleChangeEmail}
-        />
         <label for="password" className="form__label">
           Пароль
+          <input
+            type="password"
+            id="passwordReq"
+            name="password"
+            minLength="8"
+            maxLength="12"
+            placeholder="Придумайте пароль"
+            required
+            className="form__input"
+            value={values.password}
+            onChange={handleChange}
+          />
+          <span className="form__error-message">{errors.password}</span>
         </label>
-        <input
-          type="password"
-          id="password"
-          minLength="6"
-          maxLength="12"
-          placeholder="Придумайте пароль"
-          required
-          className="form__input"
-          value={password}
-          onChange={handleChangePassword}
-        />
       </Form>
     </main>
   );

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -9,11 +15,15 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+// import { filteredMovies } from "../../utils/utils";
+// import { SHORT_FILM_DURATION } from "../..utils/constants";
 import * as auth from "../../utils/auth";
 
 import "./App.css";
 import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
 const headerColor = {
   background: "#202020",
 };
@@ -25,32 +35,203 @@ const colorIconProfile = {
 };
 
 function App() {
+  const [initialCards, setInitialCard] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
+  const [resStatus, setResStatus] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [nullResult, setNullResult] = useState(false);
+  const [isReqError, setIsReqError] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  function handleUpdateUser(name, email) {
     mainApi
-      .getUserInfo()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        console.log(userInfo);
+      .sendUserData(name, email)
+      .then((res) => {
+        setCurrentUser(res.data);
+        setResStatus(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [isLoggedIn]);
+      .catch((err) => console.log(err));
+  }
 
-  function handleRegister(name, email, password) {
+  function handleRegister({ name, email, password }) {
     auth
       .register(name, email, password)
       .then((res) => {
-        navigate("/signup", { replace: true });
+        handleLogin({ email, password });
+        navigate("/signin", { replace: true });
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  function handleLogin({ email, password }) {
+    auth
+      .login(email, password)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+        setIsLoggedIn(true);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function tokenVarification() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((res) => {
+          if (res) {
+            setIsLoggedIn(true);
+            navigate(pathname, { replace: true });
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
+  function signOut() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setIsSearching(false);
+    setSavedMovies([]);
+    setInitialCard([]);
+    localStorage.clear();
+
+    navigate("/", { replace: true });
+  }
+
+  function filteredMovies(movies, dataQuery, checkbox) {
+    const searchMovies = movies.filter((movie) => {
+      const movieRu = movie.nameRU
+        .toLowerCase()
+        .includes(dataQuery.toLowerCase());
+      const movieEn = movie.nameEN
+        .toLowerCase()
+        .includes(dataQuery.toLowerCase());
+
+      return movieRu || movieEn;
+    });
+    if (checkbox) {
+      const shortSearchMovies = searchMovies.filter((movie) => {
+        return movie.duration <= 40;
+      });
+      if (shortSearchMovies.length === 0) {
+        setNullResult(true);
+      } else {
+        setNullResult(false);
+        localStorage.setItem("initialCards", JSON.stringify(shortSearchMovies));
+        return shortSearchMovies;
+      }
+    } else {
+      setNullResult(false);
+      if (location.pathname === "/movies") {
+        localStorage.setItem("initialCards", JSON.stringify(searchMovies));
+      }
+      return searchMovies;
+    }
+  }
+
+  function handleFilteredSavedMovies(movies, dataQuery, checkbox) {
+    setSavedMovies(filteredMovies(movies, dataQuery, checkbox, setNullResult));
+  }
+
+  function handleFilteredMovies(movies, dataQuery, checkbox) {
+    setIsLoading(true);
+    if (!localStorage.getItem("allMovies")) {
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          localStorage.setItem("allMovies", JSON.stringify(movies));
+          const searchMovies = filteredMovies(
+            movies,
+            dataQuery,
+            checkbox,
+            setNullResult
+          );
+          setInitialCard(searchMovies);
+          localStorage.setItem("queryValue", dataQuery);
+          localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+          localStorage.setItem("initialCard", JSON.stringify(searchMovies));
+          setIsReqError(false);
+        })
+        .catch((err) => {
+          setIsReqError(true);
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setInitialCard(
+        filteredMovies(movies, dataQuery, checkbox, setNullResult)
+      );
+      setIsLoading(false);
+      localStorage.setItem("queryValue", dataQuery);
+      localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+    }
+  }
+
+  function isSaved(card) {
+    return savedMovies.some((movie) => movie.movieId === card.id);
+  }
+
+  function saveMovies(card) {
+    mainApi
+      .saveMovies(card)
+      .then((res) => {
+        console.log(res);
+        setSavedMovies([res.data, ...savedMovies]);
+        localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function removeMovies(card) {
+    const movie = savedMovies.find(
+      (movie) => movie.movieId === card.id || card.movieId
+    );
+    mainApi
+      .deleteMovie(movie._id)
+      .then((res) => {
+        console.log(res);
+        setSavedMovies(
+          savedMovies.filter((savedMovie) => savedMovie._id !== movie._id)
+        );
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userData, movies]) => {
+          setCurrentUser(userData.user);
+          setSavedMovies(movies.reverse());
+          setIsReqError(false);
+          const cardsLocal = JSON.parse(localStorage.getItem("initialCards"));
+          if (cardsLocal) {
+            setInitialCard(cardsLocal);
+          }
+        })
+        .catch((err) => {
+          setIsReqError(true);
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    tokenVarification();
+    if (localStorage.getItem("queryValue")) {
+      setIsSearching(true);
+    }
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -72,38 +253,72 @@ function App() {
                 </>
               }
             />
-            <Route path="/signin" element={<Login />} />
+            <Route
+              path="/signin"
+              element={
+                isLoggedIn ? (
+                  <Navigate to="/movies" replace />
+                ) : (
+                  <Login handleLogin={handleLogin} />
+                )
+              }
+            />
             <Route
               path="/signup"
-              element={<Register handleRegister={handleRegister} />}
+              element={
+                isLoggedIn ? (
+                  <Navigate to="/movies" replace />
+                ) : (
+                  <Register handleRegister={handleRegister} />
+                )
+              }
             />
             <Route
               path="/movies"
               element={
-                <>
-                  <Header style={headerColor} />
-                  <Movies />
-                  <Footer />
-                </>
+                <ProtectedRoute
+                  path="/movies"
+                  element={Movies}
+                  cards={initialCards}
+                  isLoggedIn={isLoggedIn}
+                  headerColor={headerColor}
+                  handleFiltered={handleFilteredMovies}
+                  saveMovies={saveMovies}
+                  removeMovies={removeMovies}
+                  savedMovies={savedMovies}
+                  isSearching={isSearching}
+                  isLoading={isLoading}
+                  nullResult={nullResult}
+                  isReqError={isReqError}
+                  isSaved={isSaved}
+                />
               }
             />
             <Route
               path="/saved-movies"
               element={
-                <>
-                  <Header style={headerColor} />
-                  <SavedMovies />
-                  <Footer />
-                </>
+                <ProtectedRoute
+                  path="/saved-movies"
+                  element={SavedMovies}
+                  savedMovies={savedMovies}
+                  removeMovies={removeMovies}
+                  handleFiltered={handleFilteredSavedMovies}
+                  isLoggedIn={isLoggedIn}
+                  style={headerColor}
+                />
               }
             />
             <Route
               path="/profile"
               element={
-                <>
-                  <Header style={headerColor} />
-                  <Profile />
-                </>
+                <ProtectedRoute
+                  element={Profile}
+                  isLoggedIn={isLoggedIn}
+                  onUpdateUser={handleUpdateUser}
+                  signOut={signOut}
+                  resStatus={resStatus}
+                  style={headerColor}
+                />
               }
             />
           </Routes>

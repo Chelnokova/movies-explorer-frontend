@@ -1,17 +1,56 @@
 import "./MoviesCard.css";
-import img from "../../images/movie-img.jpg";
+import { timeConverter } from "../../utils/utils";
+import { useLocation } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
 
-function MoviesCard(props) {
+function MoviesCard({ card, saveMovies, removeMovies, isSaved }) {
+  const location = useLocation();
+
+  function hundleClickImg() {
+    window.open(card.trailerLink);
+  }
+
+  function toggleSaveButton() {
+    isSaved(card) ? removeMovies(card) : saveMovies(card);
+  }
+
+  function hundleRemoveButton() {
+    removeMovies(card);
+  }
+
   return (
     <li className="card">
       <article className="card__info">
-        <h2 className="card__title">В погоне за Бенкси</h2>
-        <p className="card__time">0ч 42м</p>
+        <h2 className="card__title">{card.nameRU}</h2>
+        <p className="card__time">{timeConverter(card)}</p>
       </article>
-      <img className="card__img" src={img} alt={props.title} />
-      <button type="button" className="card__save-button">
-        Сохранить
-      </button>
+      <img
+        onClick={hundleClickImg}
+        className="card__img"
+        src={
+          !card.image.url
+            ? card.image
+            : `https://api.nomoreparties.co/${card.image.url}`
+        }
+        alt={`На изображении фильм ${card.nameRU}`}
+      />
+      {location.pathname === "/movies" ? (
+        <button
+          onClick={toggleSaveButton}
+          type="button"
+          className={`card__save-button ${
+            isSaved(card) ? "card__save-button_checked" : ""
+          }`}
+        >
+          {!isSaved(card) ? "Сохранить" : ""}
+        </button>
+      ) : (
+        <button
+          onClick={hundleRemoveButton}
+          type="button"
+          className="card__save-button card__save-button_type_save"
+        ></button>
+      )}
     </li>
   );
 }

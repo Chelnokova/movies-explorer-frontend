@@ -2,6 +2,11 @@
 	padding: 70px 70px 230px;
 }
 
+.saved-movies__text {
+	text-align: center;
+	font-size: 14px;
+}
+
 @media screen and (max-width: 1023px) {
 	.saved-movies {
 		padding: 70px 30px 175px;

@@ -17,13 +17,13 @@ export const register = (name, email, password) => {
   }).then(checkResponse);
 };
 
-export const login = (password, email) => {
+export const login = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password, email }),
+    body: JSON.stringify({ email, password }),
   }).then(checkResponse);
 };
 export const checkToken = (token) => {
