@@ -61,9 +61,9 @@ function App() {
     auth
       .register(name, email, password)
       .then((res) => {
+        setResStatus(false);
         handleLogin({ email, password });
         navigate("/signin", { replace: true });
-        setResStatus(false);
       })
       .catch((err) => {
         setResStatus(true);
@@ -75,13 +75,15 @@ function App() {
     auth
       .login(email, password)
       .then((res) => {
-        localStorage.setItem("token", res.token);
         setIsLoggedIn(true);
-        navigate("/movies", { replace: true });
         setResStatus(false);
+        localStorage.setItem("token", res.token);
+        navigate("/movies", { replace: true });
       })
-      .catch((err) => console.log(err));
-    setResStatus(true);
+      .catch((err) => {
+        console.log(err);
+        setResStatus(true);
+      });
   }
 
   function tokenVarification() {
@@ -132,6 +134,8 @@ function App() {
         localStorage.setItem("initialCards", JSON.stringify(shortSearchMovies));
         return shortSearchMovies;
       }
+    } else if (searchMovies.length === 0) {
+      setNullResult(true);
     } else {
       setNullResult(false);
       if (location.pathname === "/movies") {
@@ -142,7 +146,7 @@ function App() {
   }
 
   function handleFilteredSavedMovies(movies, dataQuery, checkbox) {
-    setSavedMovies(filteredMovies(movies, dataQuery, checkbox, setNullResult));
+    setSavedMovies(filteredMovies(movies, dataQuery, checkbox));
   }
 
   function handleFilteredMovies(movies, dataQuery, checkbox) {
@@ -151,14 +155,12 @@ function App() {
       moviesApi
         .getMovies()
         .then((movies) => {
+          console.log(movies);
           localStorage.setItem("allMovies", JSON.stringify(movies));
-          const searchMovies = filteredMovies(
-            movies,
-            dataQuery,
-            checkbox,
-            setNullResult
-          );
+          const searchMovies = filteredMovies(movies, dataQuery, checkbox);
+          console.log(searchMovies);
           setInitialCard(searchMovies);
+          console.log(initialCards);
           localStorage.setItem("queryValue", dataQuery);
           localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
           localStorage.setItem("initialCard", JSON.stringify(searchMovies));
@@ -172,9 +174,7 @@ function App() {
           setIsLoading(false);
         });
     } else {
-      setInitialCard(
-        filteredMovies(movies, dataQuery, checkbox, setNullResult)
-      );
+      setInitialCard(filteredMovies(movies, dataQuery, checkbox));
       setIsLoading(false);
       localStorage.setItem("queryValue", dataQuery);
       localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));

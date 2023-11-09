@@ -18,6 +18,7 @@ function Movies({
   isSaved,
 }) {
   const movies = JSON.parse(localStorage.getItem("allMovies"));
+  const searchLocalMovies = JSON.parse(localStorage.getItem("initialCard"));
   return (
     <>
       <Header style={headerColor} isLoggedIn={isLoggedIn} />
@@ -27,7 +28,7 @@ function Movies({
           isSearching ? (
             !nullResult ? (
               <MoviesCardList
-                cards={cards}
+                cards={cards.length === 0 ? searchLocalMovies : cards}
                 isLoading={isLoading}
                 saveMovies={saveMovies}
                 removeMovies={removeMovies}
