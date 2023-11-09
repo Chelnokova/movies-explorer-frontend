@@ -1,10 +1,12 @@
 import "./InfoToolTip.css";
 import React from "react";
 
-function InfoToolTip({ resStatus, text }) {
+function InfoToolTip({ resStatus, text, castomClass }) {
   return (
     <span
-      className={`status-messange ${resStatus ? "status-messange_active" : ""}`}
+      className={`status-messange ${castomClass} ${
+        resStatus ? "status-messange_active" : ""
+      }`}
     >
       {text}
     </span>

@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
 import Form from "../Form/Form";
 import { patterns } from "../../utils/constants";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
+import { useLocation } from "react-router-dom";
 
 function Login(props) {
+  const { handleLogin, resStatus, setResStatus } = props;
   const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.handleLogin({
+    handleLogin({
       email: values.email,
       password: values.password,
     });
   };
+
+  useEffect(() => {
+    if (location.pathname === "/signin") {
+      setResStatus(false);
+    }
+  }, []);
 
   return (
     <main className="login">
@@ -26,6 +35,8 @@ function Login(props) {
         linktext="Регистрация"
         onSubmit={handleSubmit}
         isValid={isValid}
+        textError="Неверный логин или пароль"
+        resStatus={resStatus}
       >
         <label for="email" className="form__label">
           E-mail

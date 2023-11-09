@@ -12,3 +12,7 @@
 .status-messange_active {
 	display: block;
 }
+
+.status-messange_type_register {
+	color: #EE3465;
+}

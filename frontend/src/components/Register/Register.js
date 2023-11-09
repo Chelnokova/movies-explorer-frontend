@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import Form from "../Form/Form";
 import { patterns } from "../../utils/constants";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
+import { useLocation } from "react-router-dom";
 
 function Register(props) {
+  const { handleRegister, resStatus, setResStatus } = props;
   const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.handleRegister({
+    handleRegister({
       name: values.name,
       email: values.email,
       password: values.password,
     });
   };
+
+  useEffect(() => {
+    if (location.pathname === "/signup") {
+      setResStatus(false);
+    }
+  }, []);
 
   return (
     <main className="register">
@@ -27,6 +36,9 @@ function Register(props) {
         linktext="Войти"
         onSubmit={handleSubmit}
         isValid={isValid}
+        textError="Такой email уже существует"
+        resStatus={resStatus}
+        customClass="status-messange_type_register"
       >
         <label for="name" className="form__label">
           Имя

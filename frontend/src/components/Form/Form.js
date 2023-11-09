@@ -1,6 +1,7 @@
 import "./Form.css";
 import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
+import InfoToolTip from "../InfoToolTip/InfoToolTip";
 
 function Form({
   title,
@@ -11,6 +12,9 @@ function Form({
   children,
   onSubmit,
   isValid,
+  textError,
+  resStatus,
+  customClass,
 }) {
   return (
     <form className="form" onSubmit={onSubmit}>
@@ -19,6 +23,11 @@ function Form({
       </Link>
       <h1 className="form__title">{title}</h1>
       <div className="form__container">{children}</div>
+      <InfoToolTip
+        text={textError}
+        resStatus={resStatus}
+        customClass={customClass}
+      />
       <button
         disabled={!isValid ? true : false}
         type="submit"

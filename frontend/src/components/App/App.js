@@ -63,8 +63,10 @@ function App() {
       .then((res) => {
         handleLogin({ email, password });
         navigate("/signin", { replace: true });
+        setResStatus(false);
       })
       .catch((err) => {
+        setResStatus(true);
         console.log(err);
       });
   }
@@ -76,8 +78,10 @@ function App() {
         localStorage.setItem("token", res.token);
         setIsLoggedIn(true);
         navigate("/movies", { replace: true });
+        setResStatus(false);
       })
       .catch((err) => console.log(err));
+    setResStatus(true);
   }
 
   function tokenVarification() {
@@ -214,6 +218,7 @@ function App() {
           setCurrentUser(userData.user);
           setSavedMovies(movies.reverse());
           setIsReqError(false);
+          //   setResStatus(false);
           const cardsLocal = JSON.parse(localStorage.getItem("initialCards"));
           if (cardsLocal) {
             setInitialCard(cardsLocal);
@@ -259,7 +264,11 @@ function App() {
                 isLoggedIn ? (
                   <Navigate to="/movies" replace />
                 ) : (
-                  <Login handleLogin={handleLogin} />
+                  <Login
+                    handleLogin={handleLogin}
+                    resStatus={resStatus}
+                    setResStatus={setResStatus}
+                  />
                 )
               }
             />
@@ -269,7 +278,11 @@ function App() {
                 isLoggedIn ? (
                   <Navigate to="/movies" replace />
                 ) : (
-                  <Register handleRegister={handleRegister} />
+                  <Register
+                    handleRegister={handleRegister}
+                    resStatus={resStatus}
+                    setResStatus={setResStatus}
+                  />
                 )
               }
             />
