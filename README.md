@@ -3,3 +3,5 @@
 Ссылка на фронтенд https://julia.movies.nomoredomainsrocks.ru/
 
 Ссылка на бекенд https://api.julia.movies.nomoredomainsrocks.ru/
+
+Ссылка на пулреквест https://github.com/Chelnokova/movies-explorer-frontend/pull/2
