@@ -155,12 +155,10 @@ function App() {
       moviesApi
         .getMovies()
         .then((movies) => {
-          console.log(movies);
+          setIsSearching(true);
           localStorage.setItem("allMovies", JSON.stringify(movies));
           const searchMovies = filteredMovies(movies, dataQuery, checkbox);
-          console.log(searchMovies);
           setInitialCard(searchMovies);
-          console.log(initialCards);
           localStorage.setItem("queryValue", dataQuery);
           localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
           localStorage.setItem("initialCard", JSON.stringify(searchMovies));
@@ -198,7 +196,7 @@ function App() {
 
   function removeMovies(card) {
     const movie = savedMovies.find(
-      (movie) => movie.movieId === card.id || card.movieId
+      (movie) => movie.movieId === (card.id || card.movieId)
     );
     mainApi
       .deleteMovie(movie._id)
@@ -218,7 +216,6 @@ function App() {
           setCurrentUser(userData.user);
           setSavedMovies(movies.reverse());
           setIsReqError(false);
-          //   setResStatus(false);
           const cardsLocal = JSON.parse(localStorage.getItem("initialCards"));
           if (cardsLocal) {
             setInitialCard(cardsLocal);
