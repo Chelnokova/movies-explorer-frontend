@@ -91,7 +91,7 @@ function MoviesCardList({
         )
       ) : (
         <ul className="card-list__items">
-          {savedMovies.slice(0, numberMovies).map((card) => {
+          {savedMovies.map((card) => {
             return (
               <MoviesCard
                 card={card}
