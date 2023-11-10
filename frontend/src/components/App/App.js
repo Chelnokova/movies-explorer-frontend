@@ -17,7 +17,7 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { SHORT_FILM_DURATION } from "../..utils/constants";
+import { SHORT_FILM_DURATION } from "../../utils/constants";
 import * as auth from "../../utils/auth";
 
 import "./App.css";

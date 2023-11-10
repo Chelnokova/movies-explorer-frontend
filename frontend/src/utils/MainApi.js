@@ -1,5 +1,3 @@
-import { BASE_URL } from "./auth";
-
 class MainApi {
   constructor(options) {
     this._baseUrl = options.baseUrl;

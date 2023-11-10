@@ -3,8 +3,6 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
-import { SHORT_FILM_DURATION } from "../../utils/constants";
-import { useEffect, useState } from "react";
 
 function SavedMovies({
   style,
