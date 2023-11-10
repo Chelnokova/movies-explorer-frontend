@@ -10,23 +10,28 @@ function SavedMovies({
   savedMovies,
   saveMovies,
   removeMovies,
-  handleFiltered,
+  handleFilter,
+  nullResult,
 }) {
   return (
     <>
       <Header style={style} isLoggedIn={isLoggedIn} />
       <main className="saved-movies">
-        <SearchForm movies={savedMovies} handleFiltered={handleFiltered} />
-        {savedMovies.length === 0 ? (
-          <p className="saved-movies__text">
-            У вас пока нет сохраненных фильмов
-          </p>
+        <SearchForm movies={savedMovies} handleFilter={handleFilter} />
+        {!nullResult ? (
+          savedMovies.length === 0 ? (
+            <p className="saved-movies__text">
+              У вас пока нет сохраненных фильмов
+            </p>
+          ) : (
+            <MoviesCardList
+              savedMovies={savedMovies}
+              saveMovies={saveMovies}
+              removeMovies={removeMovies}
+            />
+          )
         ) : (
-          <MoviesCardList
-            savedMovies={savedMovies}
-            saveMovies={saveMovies}
-            removeMovies={removeMovies}
-          />
+          <p className="movies__text">Запрос не найден.</p>
         )}
       </main>
       <Footer />

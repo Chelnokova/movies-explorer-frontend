@@ -111,7 +111,7 @@ function App() {
     navigate("/", { replace: true });
   }
 
-  function filteredMovies(movies, dataQuery, checkbox) {
+  function filterMovies(movies, dataQuery, checkbox) {
     const searchMovies = movies.filter((movie) => {
       const movieRu = movie.nameRU
         .toLowerCase()
@@ -133,7 +133,7 @@ function App() {
         localStorage.setItem("initialCards", JSON.stringify(shortSearchMovies));
         return shortSearchMovies;
       }
-    } else if (searchMovies.length === 0) {
+    } else if (searchMovies.length === undefined || 0) {
       setNullResult(true);
     } else {
       setNullResult(false);
@@ -144,11 +144,16 @@ function App() {
     }
   }
 
-  function handleFilteredSavedMovies(movies, dataQuery, checkbox) {
-    setSavedMovies(filteredMovies(movies, dataQuery, checkbox));
+  function handleFilterSavedMovies(movies, dataQuery, checkbox) {
+    const filteredSavedMovies = filterMovies(movies, dataQuery, checkbox);
+    if (filteredSavedMovies === undefined || "") {
+      setNullResult(true);
+    } else {
+      setSavedMovies(filteredSavedMovies);
+    }
   }
 
-  function handleFilteredMovies(movies, dataQuery, checkbox) {
+  function handleFilterMovies(movies, dataQuery, checkbox) {
     if (!localStorage.getItem("allMovies")) {
       moviesApi
         .getMovies()
@@ -156,12 +161,20 @@ function App() {
           setIsLoading(true);
           setIsSearching(true);
           localStorage.setItem("allMovies", JSON.stringify(movies));
-          const searchMovies = filteredMovies(movies, dataQuery, checkbox);
-          setInitialCard(searchMovies);
-          localStorage.setItem("queryValue", dataQuery);
-          localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
-          localStorage.setItem("initialCard", JSON.stringify(searchMovies));
-          setIsReqError(false);
+          const searchMovies = filterMovies(movies, dataQuery, checkbox);
+          if (searchMovies.length !== 0) {
+            console.log(searchMovies);
+            setInitialCard(searchMovies);
+            localStorage.setItem("queryValue", dataQuery);
+            localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+            localStorage.setItem("initialCard", JSON.stringify(searchMovies));
+            setIsReqError(false);
+            setNullResult(false);
+          } else {
+            setNullResult(true);
+            localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+            localStorage.setItem("queryValue", dataQuery);
+          }
         })
         .catch((err) => {
           setIsReqError(true);
@@ -172,9 +185,16 @@ function App() {
           setIsLoading(false);
         });
     } else {
-      setInitialCard(filteredMovies(movies, dataQuery, checkbox));
-      localStorage.setItem("queryValue", dataQuery);
-      localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+      const filtredListMovies = filterMovies(movies, dataQuery, checkbox);
+      if (filtredListMovies === undefined || "") {
+        setNullResult(true);
+        console.log(initialCards);
+      } else {
+        setNullResult(false);
+        setInitialCard(filtredListMovies);
+        localStorage.setItem("queryValue", dataQuery);
+        localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+      }
     }
   }
 
@@ -291,7 +311,7 @@ function App() {
                   cards={initialCards}
                   isLoggedIn={isLoggedIn}
                   headerColor={headerColor}
-                  handleFiltered={handleFilteredMovies}
+                  handleFilter={handleFilterMovies}
                   saveMovies={saveMovies}
                   removeMovies={removeMovies}
                   savedMovies={savedMovies}
@@ -311,9 +331,10 @@ function App() {
                   element={SavedMovies}
                   savedMovies={savedMovies}
                   removeMovies={removeMovies}
-                  handleFiltered={handleFilteredSavedMovies}
+                  handleFilter={handleFilterSavedMovies}
                   isLoggedIn={isLoggedIn}
                   style={headerColor}
+                  nullResult={nullResult}
                 />
               }
             />

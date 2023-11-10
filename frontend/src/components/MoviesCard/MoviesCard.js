@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 function MoviesCard({ card, saveMovies, removeMovies, isSaved }) {
   const location = useLocation();
 
-  function hundleClickImg() {
+  function handleClickImg() {
     window.open(card.trailerLink);
   }
 
@@ -14,7 +14,7 @@ function MoviesCard({ card, saveMovies, removeMovies, isSaved }) {
     isSaved(card) ? removeMovies(card) : saveMovies(card);
   }
 
-  function hundleRemoveButton() {
+  function handleRemoveButton() {
     removeMovies(card);
   }
 
@@ -25,7 +25,7 @@ function MoviesCard({ card, saveMovies, removeMovies, isSaved }) {
         <p className="card__time">{timeConverter(card)}</p>
       </article>
       <img
-        onClick={hundleClickImg}
+        onClick={handleClickImg}
         className="card__img"
         src={
           !card.image.url
@@ -46,7 +46,7 @@ function MoviesCard({ card, saveMovies, removeMovies, isSaved }) {
         </button>
       ) : (
         <button
-          onClick={hundleRemoveButton}
+          onClick={handleRemoveButton}
           type="button"
           className="card__save-button card__save-button_type_save"
         ></button>

@@ -8,7 +8,7 @@ function Movies({
   cards,
   isLoggedIn,
   headerColor,
-  handleFiltered,
+  handleFilter,
   isSearching,
   isLoading,
   nullResult,
@@ -23,7 +23,7 @@ function Movies({
     <>
       <Header style={headerColor} isLoggedIn={isLoggedIn} />
       <main className="movies">
-        <SearchForm movies={movies} handleFiltered={handleFiltered} />
+        <SearchForm movies={movies} handleFilter={handleFilter} />
         {!isReqError ? (
           isSearching ? (
             !nullResult ? (

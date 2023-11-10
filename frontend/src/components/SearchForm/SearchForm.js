@@ -4,7 +4,7 @@ import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-function SearchForm({ movies, handleFiltered }) {
+function SearchForm({ movies, handleFilter }) {
   const [isCheckbox, setIsCheckbox] = useState(false);
   const { values, handleChange } = useFormWithValidation();
   const queryValue = localStorage.getItem("queryValue");
@@ -15,12 +15,15 @@ function SearchForm({ movies, handleFiltered }) {
   function toggleCheckboxChange(e) {
     const isCheckCheckbox = e.target.checked;
     setIsCheckbox(isCheckCheckbox);
+    if (searchQuery !== "") {
+      handleFilter(movies, searchQuery, !isCheckbox);
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    handleFiltered(movies, searchQuery, isCheckbox);
+    handleFilter(movies, searchQuery, isCheckbox);
   };
 
   useEffect(() => {
