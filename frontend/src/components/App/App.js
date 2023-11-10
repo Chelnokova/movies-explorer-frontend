@@ -150,11 +150,11 @@ function App() {
   }
 
   function handleFilteredMovies(movies, dataQuery, checkbox) {
-    setIsLoading(true);
     if (!localStorage.getItem("allMovies")) {
       moviesApi
         .getMovies()
         .then((movies) => {
+          setIsLoading(true);
           setIsSearching(true);
           localStorage.setItem("allMovies", JSON.stringify(movies));
           const searchMovies = filteredMovies(movies, dataQuery, checkbox);
@@ -167,13 +167,13 @@ function App() {
         .catch((err) => {
           setIsReqError(true);
           console.log(err);
+          setIsLoading(false);
         })
         .finally(() => {
           setIsLoading(false);
         });
     } else {
       setInitialCard(filteredMovies(movies, dataQuery, checkbox));
-      setIsLoading(false);
       localStorage.setItem("queryValue", dataQuery);
       localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
     }
