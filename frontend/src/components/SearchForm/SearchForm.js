@@ -29,6 +29,8 @@ function SearchForm({ movies, handleFilter }) {
   useEffect(() => {
     if (location.pathname === "/movies") {
       setIsCheckbox(localCheckbox || isCheckbox);
+    } else {
+      setIsCheckbox(false);
     }
   }, []);
 
@@ -40,7 +42,11 @@ function SearchForm({ movies, handleFilter }) {
             className="search__input"
             type="text"
             required
-            placeholder={queryValue || "Фильм"}
+            placeholder={
+              location.pathname === "/saved-movies"
+                ? "Фильм"
+                : queryValue || "Фильм"
+            }
             name="moviesSearch"
             onChange={handleChange}
             value={values.moviesSearch}
