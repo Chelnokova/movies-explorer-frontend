@@ -146,7 +146,7 @@ function App() {
 
   function handleFilterSavedMovies(movies, dataQuery, checkbox) {
     const filteredSavedMovies = filterMovies(movies, dataQuery, checkbox);
-    if (filteredSavedMovies === undefined || "") {
+    if (filteredSavedMovies.length === 0) {
       setNullResult(true);
     } else {
       setSavedMovies(filteredSavedMovies);
