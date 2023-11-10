@@ -17,8 +17,7 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-// import { filteredMovies } from "../../utils/utils";
-// import { SHORT_FILM_DURATION } from "../..utils/constants";
+import { SHORT_FILM_DURATION } from "../..utils/constants";
 import * as auth from "../../utils/auth";
 
 import "./App.css";
@@ -125,7 +124,7 @@ function App() {
     });
     if (checkbox) {
       const shortSearchMovies = searchMovies.filter((movie) => {
-        return movie.duration <= 40;
+        return movie.duration <= SHORT_FILM_DURATION;
       });
       if (shortSearchMovies.length === 0) {
         setNullResult(true);
