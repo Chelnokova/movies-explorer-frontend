@@ -12,6 +12,7 @@ function SavedMovies({
   removeMovies,
   handleFilter,
   nullResult,
+  resSearchSaveMovies,
 }) {
   return (
     <>
@@ -28,6 +29,7 @@ function SavedMovies({
               savedMovies={savedMovies}
               saveMovies={saveMovies}
               removeMovies={removeMovies}
+              resSearchSaveMovies={resSearchSaveMovies}
             />
           )
         ) : (

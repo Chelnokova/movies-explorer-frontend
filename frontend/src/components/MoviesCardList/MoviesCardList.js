@@ -20,9 +20,11 @@ function MoviesCardList({
   removeMovies,
   savedMovies,
   isSaved,
+  resSearchSaveMovies,
 }) {
   const [numberMovies, setNumberMovies] = useState(0);
   const location = useLocation();
+  const cardsSaved = resSearchSaveMovies || savedMovies;
 
   function calculatingNumberMoviesScreen() {
     const display = window.innerWidth;
@@ -91,7 +93,7 @@ function MoviesCardList({
         )
       ) : (
         <ul className="card-list__items">
-          {savedMovies.map((card) => {
+          {cardsSaved.map((card) => {
             return (
               <MoviesCard
                 card={card}

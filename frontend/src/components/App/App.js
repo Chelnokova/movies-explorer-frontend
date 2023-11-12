@@ -132,14 +132,15 @@ function App() {
       return searchMovies;
     }
   }
-
+  const [resSearchSaveMovies, setResSearchSaveMovies] = useState("");
   function handleFilterSavedMovies(movies, dataQuery, checkbox) {
     const filteredSavedMovies = filterMovies(movies, dataQuery, checkbox);
     if (filteredSavedMovies.length === 0) {
       setNullResSaveMovies(true);
     } else {
       setNullResSaveMovies(false);
-      setSavedMovies(filteredSavedMovies);
+      setResSearchSaveMovies(filteredSavedMovies);
+      //   setSavedMovies(filteredSavedMovies);
     }
   }
 
@@ -176,7 +177,6 @@ function App() {
         });
     } else {
       const filtredListMovies = filterMovies(movies, dataQuery, checkbox);
-      console.log(filtredListMovies);
       if (filtredListMovies.length === 0) {
         setNullResult(true);
         localStorage.setItem("initialCards", JSON.stringify(""));
@@ -334,6 +334,7 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   style={headerColor}
                   nullResult={nullResSaveMovies}
+                  resSearchSaveMovies={resSearchSaveMovies}
                 />
               }
             />
