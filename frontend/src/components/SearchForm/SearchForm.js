@@ -1,34 +1,37 @@
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 function SearchForm({ movies, handleFilter }) {
   const [isCheckbox, setIsCheckbox] = useState(false);
-  const { values, handleChange } = useFormWithValidation();
-  const queryValue = localStorage.getItem("queryValue");
+  const [query, setQuery] = useState("");
   const localCheckbox = JSON.parse(localStorage.getItem("stateCheckbox"));
-  const searchQuery = values.moviesSearch;
   const location = useLocation();
 
   function toggleCheckboxChange(e) {
     const isCheckCheckbox = e.target.checked;
     setIsCheckbox(isCheckCheckbox);
-    if (searchQuery !== "") {
-      handleFilter(movies, searchQuery, !isCheckbox);
+    if (query !== "") {
+      handleFilter(movies, query, !isCheckbox);
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    handleFilter(movies, searchQuery, isCheckbox);
+    handleFilter(movies, query, isCheckbox);
   };
 
+  function handleChange(e) {
+    setQuery(e.target.value);
+  }
+
   useEffect(() => {
-    if (location.pathname === "/movies") {
+    if (location.pathname === "/movies" && localStorage.getItem("queryValue")) {
+      const queryValue = localStorage.getItem("queryValue");
       setIsCheckbox(localCheckbox || isCheckbox);
+      setQuery(queryValue);
     } else {
       setIsCheckbox(false);
     }
@@ -42,14 +45,10 @@ function SearchForm({ movies, handleFilter }) {
             className="search__input"
             type="text"
             required
-            placeholder={
-              location.pathname === "/saved-movies"
-                ? "Фильм"
-                : queryValue || "Фильм"
-            }
+            placeholder="Фильм"
             name="moviesSearch"
             onChange={handleChange}
-            value={values.moviesSearch}
+            value={query || ""}
           />
           <button type="submit" className="search__button">
             Поиск

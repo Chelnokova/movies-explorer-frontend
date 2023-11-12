@@ -42,6 +42,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nullResult, setNullResult] = useState(false);
+  const [nullResSaveMovies, setNullResSaveMovies] = useState(false);
   const [isReqError, setIsReqError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -126,20 +127,8 @@ function App() {
       const shortSearchMovies = searchMovies.filter((movie) => {
         return movie.duration <= SHORT_FILM_DURATION;
       });
-      if (shortSearchMovies.length === 0) {
-        setNullResult(true);
-      } else {
-        setNullResult(false);
-        localStorage.setItem("initialCards", JSON.stringify(shortSearchMovies));
-        return shortSearchMovies;
-      }
-    } else if (searchMovies.length === undefined || 0) {
-      setNullResult(true);
+      return shortSearchMovies;
     } else {
-      setNullResult(false);
-      if (location.pathname === "/movies") {
-        localStorage.setItem("initialCards", JSON.stringify(searchMovies));
-      }
       return searchMovies;
     }
   }
@@ -147,8 +136,9 @@ function App() {
   function handleFilterSavedMovies(movies, dataQuery, checkbox) {
     const filteredSavedMovies = filterMovies(movies, dataQuery, checkbox);
     if (filteredSavedMovies.length === 0) {
-      setNullResult(true);
+      setNullResSaveMovies(true);
     } else {
+      setNullResSaveMovies(false);
       setSavedMovies(filteredSavedMovies);
     }
   }
@@ -163,15 +153,15 @@ function App() {
           localStorage.setItem("allMovies", JSON.stringify(movies));
           const searchMovies = filterMovies(movies, dataQuery, checkbox);
           if (searchMovies.length !== 0) {
-            console.log(searchMovies);
             setInitialCard(searchMovies);
             localStorage.setItem("queryValue", dataQuery);
             localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
-            localStorage.setItem("initialCard", JSON.stringify(searchMovies));
+            localStorage.setItem("initialCards", JSON.stringify(searchMovies));
             setIsReqError(false);
             setNullResult(false);
           } else {
             setNullResult(true);
+            localStorage.setItem("initialCards", JSON.stringify(""));
             localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
             localStorage.setItem("queryValue", dataQuery);
           }
@@ -186,14 +176,19 @@ function App() {
         });
     } else {
       const filtredListMovies = filterMovies(movies, dataQuery, checkbox);
-      if (filtredListMovies === undefined || "") {
+      console.log(filtredListMovies);
+      if (filtredListMovies.length === 0) {
         setNullResult(true);
-        console.log(initialCards);
+        localStorage.setItem("initialCards", JSON.stringify(""));
+        localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+        localStorage.setItem("queryValue", dataQuery);
       } else {
         setNullResult(false);
         setInitialCard(filtredListMovies);
+        localStorage.setItem("initialCards", JSON.stringify(filtredListMovies));
         localStorage.setItem("queryValue", dataQuery);
         localStorage.setItem("stateCheckbox", JSON.stringify(checkbox));
+        console.log(JSON.parse(localStorage.getItem("initialCards")));
       }
     }
   }
@@ -251,6 +246,10 @@ function App() {
     tokenVarification();
     if (localStorage.getItem("queryValue")) {
       setIsSearching(true);
+    }
+    const localCards = JSON.parse(localStorage.getItem("initialCards"));
+    if (localCards.length === 0) {
+      setNullResult(true);
     }
   }, []);
 
@@ -334,7 +333,7 @@ function App() {
                   handleFilter={handleFilterSavedMovies}
                   isLoggedIn={isLoggedIn}
                   style={headerColor}
-                  nullResult={nullResult}
+                  nullResult={nullResSaveMovies}
                 />
               }
             />
