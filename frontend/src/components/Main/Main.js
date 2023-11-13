@@ -3,9 +3,13 @@ import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
-import React from "react";
+import React, { useEffect } from "react";
 
-function Main() {
+function Main(props) {
+  useEffect(() => {
+    props.setResSearchSaveMovies("");
+    props.setNullResSaveMovies(false);
+  }, []);
   return (
     <main className="main">
       <Promo />

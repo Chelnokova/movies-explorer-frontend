@@ -30,6 +30,11 @@ function Profile(props) {
     }
   }, [currentUser, values]);
 
+  useEffect(() => {
+    props.setResSearchSaveMovies("");
+    props.setNullResSaveMovies(false);
+  });
+
   function handleSubmit(e) {
     e.preventDefault();
 

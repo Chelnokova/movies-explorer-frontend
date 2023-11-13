@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import { useEffect } from "react";
 
 function Movies({
   cards,
@@ -16,9 +17,15 @@ function Movies({
   saveMovies,
   removeMovies,
   isSaved,
+  setResSearchSaveMovies,
+  setNullResSaveMovies,
 }) {
   const movies = JSON.parse(localStorage.getItem("allMovies"));
   const searchLocalMovies = JSON.parse(localStorage.getItem("initialCards"));
+  useEffect(() => {
+    setResSearchSaveMovies("");
+    setNullResSaveMovies(false);
+  });
   return (
     <>
       <Header style={headerColor} isLoggedIn={isLoggedIn} />

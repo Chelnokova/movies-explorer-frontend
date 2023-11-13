@@ -40,6 +40,7 @@ function App() {
   const [resStatus, setResStatus] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [resSearchSaveMovies, setResSearchSaveMovies] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [nullResult, setNullResult] = useState(false);
   const [nullResSaveMovies, setNullResSaveMovies] = useState(false);
@@ -132,7 +133,7 @@ function App() {
       return searchMovies;
     }
   }
-  const [resSearchSaveMovies, setResSearchSaveMovies] = useState("");
+
   function handleFilterSavedMovies(movies, dataQuery, checkbox) {
     const filteredSavedMovies = filterMovies(movies, dataQuery, checkbox);
     if (filteredSavedMovies.length === 0) {
@@ -268,7 +269,10 @@ function App() {
                     colorIconProfile={colorIconProfile}
                     isLoggedIn={isLoggedIn}
                   />
-                  <Main />
+                  <Main
+                    setResSearchSaveMovies={setResSearchSaveMovies}
+                    setNullResSaveMovies={setNullResSaveMovies}
+                  />
                   <Footer />
                 </>
               }
@@ -319,6 +323,8 @@ function App() {
                   nullResult={nullResult}
                   isReqError={isReqError}
                   isSaved={isSaved}
+                  setResSearchSaveMovies={setResSearchSaveMovies}
+                  setNullResSaveMovies={setNullResSaveMovies}
                 />
               }
             />
@@ -348,6 +354,8 @@ function App() {
                   signOut={signOut}
                   resStatus={resStatus}
                   style={headerColor}
+                  setResSearchSaveMovies={setResSearchSaveMovies}
+                  setNullResSaveMovies={setNullResSaveMovies}
                 />
               }
             />
