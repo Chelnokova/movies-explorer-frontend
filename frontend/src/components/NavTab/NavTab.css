@@ -1,0 +1,18 @@
+.navtab {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.33; /* 133.333% */
+}
+
+.navtab__item {
+	text-decoration: none;
+	color: #FFF;
+	padding: 10px 20px;
+	border-radius: 3px;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+}
+
+.navtab__item:hover {
+	opacity: 0.7;
+}

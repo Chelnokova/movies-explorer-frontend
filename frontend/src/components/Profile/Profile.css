@@ -1,0 +1,142 @@
+.profile {
+	padding: 74px 0 70px ;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 123px;
+}
+
+.profile__title {
+	font-size: 24px;
+	font-weight: 500;
+	line-height: normal;
+	margin: 0;
+}
+
+.profile__form {
+	width: 410px;
+	display: flex;
+	flex-direction: column;
+	font-size: 11px;
+	font-weight: 400;
+	line-height: normal;
+	position: relative;
+}
+
+.profile__section {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+}
+
+.profile__section:first-child::before {
+	content: "";
+	position: absolute;
+	top: 30px;
+	left: 0;
+	width: 410px;
+	height: 1px;
+	background: #424242;
+}
+
+.profile__section:first-child {
+	margin-bottom: 32px;
+}
+
+.profile__label {
+	font-weight: 500;
+}
+
+.profile__input {
+	text-align: right;
+	border: none;
+	background: #202020;
+	color:#FFF
+}
+
+.profile__input:invalid {
+	color: #EE3465;
+}
+
+.profile__status-message {
+	display: block;
+	font-size: 11px;
+	font-weight: 400;
+	line-height: normal;
+	color: #FF3055;
+	position: absolute;
+	top: 15px;
+	right: 0;
+	
+}
+
+.profile__button-save {
+	font-family: inherit;
+	border: none;
+	background: #202020;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: normal;
+	color: #FFF;
+	cursor: pointer;
+	margin: 218px 0 14px;
+}
+
+.profile__button-quit {
+	font-family: inherit;
+	border: none;
+	background: #202020;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: normal;
+	color: #FFF;
+	cursor: pointer;
+	color: #EE3465;
+	text-decoration: none;
+	text-align: center;
+}
+
+.profile__button-save:hover {
+	opacity: 0.8;
+}
+.profile__button-quit:hover {
+	opacity: 0.8;
+}
+
+.profile__button-save_inactive {
+	cursor: not-allowed;
+	color: #424242;
+}
+
+@media screen and (max-width: 1023px) {
+	.profile {
+		padding: 236px 0 269px ;
+		row-gap: 96px;
+	}
+
+	.profile__button-save {
+		margin-top: 209px 0 14px;
+	}
+}
+@media screen and (max-width: 767px) {
+	.profile {
+		padding: 70px 0 40px ;
+		row-gap: 80px;
+	}
+
+	.profile__button-save {
+		margin: 380px 0 14px;
+	}
+
+	.profile__form {
+		max-width: 260px;
+	}
+
+	.profile__button {
+		font-size: 12px;
+	}
+
+	.profile__section:first-child::before {
+		width: 260px;
+	}
+}

@@ -1,0 +1,20 @@
+.movies {
+	padding: 70px 70px 80px;
+	flex: 1 0 auto;
+}
+
+.movies__text {
+	text-align: center;
+	font-size: 14px;
+}
+
+@media screen and (max-width: 1023px) {
+	.movies {
+		padding: 70px 30px 80px;
+	}
+}
+@media screen and (max-width: 767px) {
+	.movies {
+		padding: 70px 14px 80px;
+	}
+}
